@@ -1,0 +1,32 @@
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include CHANGES.rst
+include LICENSE
+include README.md
+include tox.ini
+include setup.*
+
+exclude docker-composer.yml
+exclude django_mb_demo
+exclude Makefile
+exclude Dockerfile
+exclude django_mb_demo
+exclude manage.py
+exclude .appveyor.yml
+exclude .editorconfig
+exclude docs
+exclude hooks
+exclude tests
+
+recursive-include src/django_mb *.html *.png *.gif *js *.css *jpg *jpeg *svg *py
+recursive-include src/django_mb/locale *
+recursive-include src/requirements *.pip
+
+
+recursive-exclude *.egg-info *
+recursive-exclude tests *
+recursive-exclude .cache *
+recursive-exclude __pycache__ *
+recursive-exclude composer *
+recursive-exclude docs *
+recursive-exclude hooks *

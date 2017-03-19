@@ -1,0 +1,15 @@
+*.py[cod]
+__pycache__
+.cache
+~build
+coverage.xml
+django_mb_demo
+pytest.xml
+/kafka_recv.py
+/kafka_send.py
+.DS_Store
+.tox
+Dockerfile
+docker-compose.yml
+dist
+/manage.py
