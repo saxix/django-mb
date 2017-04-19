@@ -1,5 +1,8 @@
 language: python
 
+services:
+  - docker
+
 python: 3.5
 env:
   - TOXENV=d19-py27
