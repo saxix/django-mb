@@ -13,3 +13,5 @@ Dockerfile
 docker-compose.yml
 dist
 /manage.py
+.coverage
+/src/django_message_broker.egg-info
