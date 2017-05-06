@@ -45,7 +45,7 @@ NOTIFY_ALL = [NOTIFY_CREATE, NOTIFY_UPDATE, NOTIFY_DELETE]
 #     return a
 
 
-DEFAULTS = {"BROKER": "kafka",
+DEFAULTS = {"BROKER": "",
             "SERVER": "",
             "TOPIC": "topic",
             "GROUP": "django-mb",
@@ -53,13 +53,17 @@ DEFAULTS = {"BROKER": "kafka",
             "NOTIFY": [],
             "TIMEOUT": 10,
             "APPS": [],
+            "AUTH":{
+                "USERNAME": "",
+                "PASSWORD": "",
+            },
             "OPTIONS": {
                 # kafka
                 "API_VERSION": (0, 10),
                 "CLIENT": "",
                 "ACKS": 0,
                 # rabbit
-            },
+                },
             }
 
 config = dict(DEFAULTS)

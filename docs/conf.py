@@ -14,7 +14,6 @@
 import os
 import sys
 
-import django_mb
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -24,6 +23,7 @@ import django_mb
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 sys.path.append(os.path.join(parent, 'src'))
+import django_mb
 
 
 # -- General configuration -----------------------------------------------------

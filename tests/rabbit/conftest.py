@@ -4,6 +4,7 @@ import time
 
 import pika
 import pytest
+from pika import PlainCredentials
 
 from django_mb.config import config
 
@@ -11,15 +12,22 @@ logger = logging.getLogger("test.rabbit")
 
 
 @pytest.fixture(autouse=True, scope="function")
-def broker(monkeypatch):
+def broker(settings):
     logger.info("Set BROKER to rabbitmq")
     # from django_mb.producers.rabbit import Client
     # monkeypatch.setattr("django_mb.handlers.producer", Client())
-    from django_mb.handlers import get_producer
-    get_producer.cache_clear()
-    config["BROKER"] = "rabbitmq"
-    yield
-    config["BROKER"] = ""
+    # from django_mb.handlers import get_producer
+    # get_producer.cache_clear()
+    settings.MB = {"BROKER": "rabbitmq",
+                   "AUTH": {
+                       "USERNAME": "user",
+                       "PASSWORD": "password",
+                   },
+                   }
+    # config["BROKER"] = "rabbitmq"
+    # config["AUTH"] = "rabbitmq"
+    # yield
+    # config["BROKER"] = ""
 
 
 @pytest.fixture(autouse=False, scope="session")
@@ -36,6 +44,8 @@ def rabbit(request):
                                          port: port
                                      },
                                      environment={
+                                         "RABBITMQ_DEFAULT_USER": "user",
+                                         "RABBITMQ_DEFAULT_PASS": "password"
                                      })
         logger.info("RabbitMQ starting.")
         c.start()
@@ -56,9 +66,12 @@ class Consumer(object):
     def __init__(self, topic_name, port):
         self.topic_name = topic_name
         # credentials = pika.PlainCredentials('guest', 'guest')
-        conn = pika.BlockingConnection(pika.ConnectionParameters(**{"host": "localhost",
-                                                                    "port": port,
-                                                                    }))
+        cfg = {"host": "localhost",
+               "credentials": PlainCredentials(config["AUTH"]["USERNAME"],
+                                               config["AUTH"]["PASSWORD"]),
+               "port": port,
+               }
+        conn = pika.BlockingConnection(pika.ConnectionParameters(**cfg))
 
         def on_timeout():
             conn.close()

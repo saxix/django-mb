@@ -6,6 +6,7 @@ import logging
 
 import pika
 from django.utils.functional import cached_property
+from pika import PlainCredentials
 
 from django_mb.config import config
 from django_mb.serializers import serialize
@@ -14,8 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class Client(object):
-
-    @cached_property
+    @property
     def producer(self):
         cfg = self._get_client_config()
         logger.debug("RabbitMQ configuration {}".format(cfg))
@@ -51,9 +51,10 @@ class Client(object):
         else:
             host = config["SERVER"]
         return {"host": host or "localhost",
-                # "port": port,
+                "port": port,
                 # "virtual_host": None,
-                # "credentials": None,
+                "credentials": PlainCredentials(config["AUTH"]["USERNAME"],
+                                                config["AUTH"]["PASSWORD"]),
                 # "channel_max": None,
                 # "frame_max": None,
                 # "heartbeat_interval": None,
