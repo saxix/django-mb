@@ -13,8 +13,10 @@ logger = logging.getLogger("test.rabbit")
 @pytest.fixture(autouse=True, scope="function")
 def broker(monkeypatch):
     logger.info("Set BROKER to rabbitmq")
-    from django_mb.producers.rabbit import Client
-    monkeypatch.setattr("django_mb.handlers.producer", Client())
+    # from django_mb.producers.rabbit import Client
+    # monkeypatch.setattr("django_mb.handlers.producer", Client())
+    from django_mb.handlers import get_producer
+    get_producer.cache_clear()
     config["BROKER"] = "rabbitmq"
     yield
     config["BROKER"] = ""

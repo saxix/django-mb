@@ -58,7 +58,7 @@ setup(
     extras_require={
         "dev": dev_requires,
         "test": tests_requires,
-        "kafka": ["kafka-python"],
+        "kafka": ["kafka-python==1.3.2"],
         "rabbit": ["pika"],
     },
     license="BSD",

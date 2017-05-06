@@ -1,5 +1,6 @@
 # -*- coding: utf-8
 from django.apps import AppConfig
+
 from django_mb.config import config
 
 

@@ -15,7 +15,7 @@ logger = logging.getLogger("test")
 
 @pytest.mark.django_db(transaction=True)
 def test_transaction(mocker, monkeypatch):
-    p = mocker.patch("django_mb.handlers.send_to_kafka")
+    p = mocker.patch("django_mb.handlers.send_to_broker")
     monkeypatch.setitem(config, "NOTIFY", NOTIFY_CREATE)
 
     try:

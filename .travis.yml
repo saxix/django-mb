@@ -7,15 +7,28 @@ python: 3.5
 env:
   - TOXENV=d19-py27
   - TOXENV=d110-py27
+  - TOXENV=d111-py27
 
   - TOXENV=d19-py33
   - TOXENV=d110-py33
+  - TOXENV=d111-py33
 
   - TOXENV=d19-py34
   - TOXENV=d110-py34
+  - TOXENV=d111-py34
 
   - TOXENV=d19-py35
   - TOXENV=d110-py35
+  - TOXENV=d111-py35
+
+  - TOXENV=d19-py36
+  - TOXENV=d110-py36
+  - TOXENV=d111-py36
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+  - docker pull rabbitmq:3
 
 install:
   - pip install -U tox

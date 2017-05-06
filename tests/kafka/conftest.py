@@ -20,10 +20,13 @@ logger = logging.getLogger("test")
 @pytest.fixture(autouse=True, scope="function")
 def broker(monkeypatch):
     logger.info("Set BROKER to kafka")
-    from django_mb.producers.kafka import Client
-    monkeypatch.setattr("django_mb.handlers.producer", Client())
+    # from django_mb.producers.kafka import Client
+    # monkeypatch.setattr("django_mb.handlers.producer", Client())
+    from django_mb.handlers import get_producer
+    get_producer.cache_clear()
     config["BROKER"] = "kafka"
-    # config["SERVER"] = "localhost:9092"
+    config["SERVER"] = "localhost:9092"
+
     yield
     config["BROKER"] = ""
 
