@@ -5,27 +5,46 @@ sudo: required
 services:
   - docker
 
-python: 3.5
+python:
+  - 2.7
+  - 3.3
+  - 3.4
+  - 3.5
+  - 3.6
+
 env:
-  - TOXENV=d19-py27
-  - TOXENV=d110-py27
-  - TOXENV=d111-py27
+  - DJANGO=1.9
+  - DJANGO=1.10
+  - DJANGO=1.11
 
-  - TOXENV=d19-py33
-  - TOXENV=d110-py33
-  - TOXENV=d111-py33
 
-  - TOXENV=d19-py34
-  - TOXENV=d110-py34
-  - TOXENV=d111-py34
+matrix:
+  exclude:
+    - python: 2.7
+      env: DJANGO=2.0
 
-  - TOXENV=d19-py35
-  - TOXENV=d110-py35
-  - TOXENV=d111-py35
+    - python: 3.3
+      env: DJANGO=1.9
 
-  - TOXENV=d19-py36
-  - TOXENV=d110-py36
-  - TOXENV=d111-py36
+    - python: 3.3
+      env: DJANGO=1.10
+
+    - python: 3.3
+      env: DJANGO=1.11
+
+    - python: 3.3
+      env: DJANGO=2.0
+
+    - python: 3.4
+      env: DJANGO=2.0
+
+    - python: 3.6
+      env: DJANGO=1.8
+    - python: 3.6
+      env: DJANGO=1.9
+    - python: 3.6
+      env: DJANGO=1.10
+
 
 before_install:
   - sudo apt-get update
@@ -37,7 +56,7 @@ install:
   - pip install -U tox
 
 script:
-  - tox
+  - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}-${DB}" -- py.test tests -v --capture=no --cov=django_mb --cov-config=tests/.coveragerc
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

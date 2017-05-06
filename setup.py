@@ -40,7 +40,6 @@ dev_requires = tests_requires + read("develop.pip")
 install_requires = read("install.any.pip", reqs)
 
 readme = codecs.open("README.rst").read()
-history = codecs.open("CHANGES.rst").read().replace(".. :changelog:", "")
 
 setup(
     name="django-message-broker",
