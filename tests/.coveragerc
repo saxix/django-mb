@@ -3,7 +3,8 @@ branch = False
 source = django_mq
 include =
 
-omit = **/django_mq/__init__.py
+omit = */django_mq/__init__.py
+       */django_mq/lru_cache.py
 
 [report]
 # Regexes for lines to exclude from consideration
