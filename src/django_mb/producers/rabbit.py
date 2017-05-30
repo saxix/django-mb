@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class Client(object):
-    @property
+    @cached_property
     def producer(self):
         cfg = self._get_client_config()
         logger.debug("RabbitMQ configuration {}".format(cfg))
@@ -51,7 +51,7 @@ class Client(object):
         else:
             host = config["SERVER"]
         return {"host": host or "localhost",
-                "port": port,
+                "port": int(port),
                 # "virtual_host": None,
                 "credentials": PlainCredentials(config["AUTH"]["USERNAME"],
                                                 config["AUTH"]["PASSWORD"]),

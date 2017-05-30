@@ -17,10 +17,13 @@ apps = []
 
 @receiver(post_save, dispatch_uid="django_mb_register_update")
 def register_update(sender, instance, raw, created, **kwargs):
+    logger.debug("Handling event for '{}'".format(instance))
     if sender._meta.app_label not in apps:
+        logger.debug("Ignoring event for disabled application {}".format(sender._meta.app_label))
         return
     op = {True: NOTIFY_CREATE, False: NOTIFY_UPDATE}[created]
     if op not in config["NOTIFY"]:
+        logger.debug("Ignoring event for disabled operation {}".format(op))
         return
     logger.debug("Add '{}' event for '{}'".format(op, instance))
     transaction.on_commit(lambda: send_to_broker(op, instance))

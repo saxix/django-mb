@@ -9,6 +9,9 @@ from django_mb.config import config
 from django_mb.producers.kafka import Client
 
 logger = logging.getLogger("test")
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'helpers'))
 
 # docker run -p 2181:2181 -p 9092:9092
 #               --env ADVERTISED_HOST=`docker-machine ip \`docker-machine active\``

@@ -1,5 +1,5 @@
 [run]
-branch = False
+branch = True
 source = django_mb
 include =
 
@@ -23,7 +23,6 @@ exclude_lines =
     # Don't complain if non-runnable code isn't run:
     #if 0:
     if __name__ == .__main__.:
-    if django.VERSION[1] < 6:
 
 ignore_errors = True
 

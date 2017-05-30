@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+import pytest
+
 from django_mb.config import config, DEFAULTS
 
 
@@ -10,9 +12,8 @@ def test_config(settings):
     assert id(config) != id(DEFAULTS) != id(settings.MB)
 
 
-def test_parse_settings(settings):
-    settings.MB = {"BROKER": "kafka"}
-    assert config["BROKER"] == "kafka"
+@pytest.mark.parametrize("broker", ["rabbit", "kafka"])
+def test_parse_settings(broker, settings):
+    settings.MB = {"BROKER": broker}
+    assert config["BROKER"] == broker
 
-    settings.MB = {"BROKER": "rabbit"}
-    assert config["BROKER"] == "rabbit"
